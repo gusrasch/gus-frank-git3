@@ -24,11 +24,19 @@ public class Server {
       // Make both connection steams available 
       ObjectOutputStream output = new ObjectOutputStream(connection.getOutputStream());
       ObjectInputStream input = new ObjectInputStream(connection.getInputStream());
+      String message;
       
       // TODO: Add a loop that reads from one connected client and
       // write backs "Hello Client".  Write back Goodbye to terminate
       // both the client and server.  Print whatever the Client writes.
-      
+      for(int i = 0; i < 5; i++) {
+        message = (String) input.readObject();
+        System.out.println("Server read: " + message);
+        
+        if(i == 5) message = "Goodbye";
+        else message = "Hello Client";
+        output.writeObject(message);
+      }
       
       // Close the connection
       connection.close();
